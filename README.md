@@ -24,7 +24,7 @@ Can create Zapier zap to add a new row to the spreadsheet when an email from Cal
 
 Modify name in html message.
 
-Must have a groups of contacts that matches the getContactGroup argument. The function will draft an email for every contact in that group.
+Must have a groups of contacts that matches the getContactGroup argument. Add zoomLink, timeZone, day, and time custom fields to contacts. The function will draft an email for every contact in that group.
 
 Add a time-based trigger to automatically run function at chosen time. Update draft email for specific date as needed.
 
