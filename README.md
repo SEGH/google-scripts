@@ -10,7 +10,7 @@ Add a time-based trigger to automatically run function at chosen time.
 
 ## makeSessionReminderDrafts
 
-Modify name in html message.
+Modify name in html message to be your name.
 
 Must have spreadsheet with id that matches the openById argument, column A for email addresses, column B for session date.
 
@@ -22,7 +22,7 @@ Can create Zapier zap to add a new row to the spreadsheet when an email from Cal
 
 ## makeFixedSessionReminderDrafts
 
-Modify name in html message.
+Modify name in html message to be your name.
 
 Must have a groups of contacts that matches the getContactGroup argument. Add zoomLink, timeZone, day, and time custom fields to contacts. The function will draft an email for every contact in that group.
 
