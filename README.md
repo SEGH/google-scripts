@@ -1,5 +1,11 @@
 # google-scripts
 
+## getFeedback
+
+Modify with your name.
+
+Add a time-based trigger to automatically run function at chosen time (one day of the month, week, etc) in order to request feedback regularly.
+
 ## sendStudentEmailBlast
 
 Modify with personal email in email list (to receive a copy of email if desired), and calendly link and name in html message.
