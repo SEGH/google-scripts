@@ -63,6 +63,7 @@ function makeSessionReminderDrafts() {
       case "Mountain":
         time = adjustEasternTime(time, 2);
         break;
+      case "Mountain Standard":
       case "Pacific":
         time = adjustEasternTime(time, 3);
         break;
