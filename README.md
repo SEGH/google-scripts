@@ -8,7 +8,7 @@ Add a time-based trigger to automatically run function at chosen time (one day o
 
 ## sendStudentEmailBlast
 
-Modify with personal email in email list (to receive a copy of email if desired), and calendly link and name in html message.
+Modify with personal email in email list (to receive a copy of email if desired), calendly link, name in html message, and 'from' field in sendEmail method options.
 
 Must have a group of contacts that matches the getContactGroup argument. The function will send an email with those contacts as bcc recipients and cc Central Tutor Support.
 
@@ -32,7 +32,7 @@ Modify name in html message to be your name.
 
 Must have a groups of contacts that matches the getContactGroup argument. Add zoomLink, timeZone, day, and time custom fields to contacts. The function will draft an email for every contact in that group.
 
-Add a time-based trigger to automatically run function at chosen time. Update draft email for specific date as needed.
+Add a time-based trigger to automatically run function at chosen time.
 
 ## Questions and Contributions
 
