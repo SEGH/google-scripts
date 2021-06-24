@@ -18,13 +18,13 @@ Add a time-based trigger to automatically run function at chosen time.
 
 Modify name in html message to be your name.
 
-Must have spreadsheet with id that matches the openById argument, column A for email addresses, column B for session date.
+Set filter in Gmail to apply 'ScheduledSessions' label and star new messages from notifications@calendly.com that contain 'New Event:'
 
-Function searches for google contact by the email in the spreadsheet column A. Add zoomLink and timeZone custom fields to each contact in google contacts.
+Function searches for google contact by the student's email found in message and drafts an email for that contact.
 
-Add a trigger with 'From spreadsheet - On change' event to automatically run function when new session is added to spreadsheet.
+Contacts must have zoomLink and timeZone custom fields.
 
-Can create Zapier zap to add a new row to the spreadsheet when an email from Calendly for a new session is received.
+Add a time-based trigger to automatically run function every hour.
 
 ## makeFixedSessionReminderDrafts
 
