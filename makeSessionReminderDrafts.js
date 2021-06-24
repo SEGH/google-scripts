@@ -1,22 +1,34 @@
 function makeSessionReminderDrafts() {
-  const sheet = SpreadsheetApp.openById('1VWBy9TZ4lDEzxL6D74zrHujE9tek1e3OAExMapgO9M4');
-  const sessions = sheet.getDataRange().getValues();
-  function makeDraft(newSession) {
-    console.log(newSession)
 
-    var email = newSession[0];
+  // Function to make a draft for a session
+  const makeDraft = newSession => {
 
-    var dateInfo = newSession[1].split("-");
-    var date = dateInfo[1]
-    var time = date.match(/\d[^\s]+/)[0];
-    var day = date.match(/([A-Z][a-z]+, [A-Z][a-z]+ \d+)/)[0];
+    // Get email message
+    const message = newSession.getMessages()[0]
 
-    var contact = ContactsApp.getContact(email);
-    var name = contact.getGivenName()
-    var fields = contact.getCustomFields()
-    var zoomLink = fields[0].getValue();
-    var timeZone = fields[1].getValue();
+    // Get time and day from subject
+    const sessionInfo = message.getSubject();
+    const dateInfo = sessionInfo.split("-");
+    const date = dateInfo[1]
+    let time = date.match(/\d[^\s]+/)[0];
+    const day = date.match(/([A-Z][a-z]+, [A-Z][a-z]+ \d+)/)[0];
 
+    console.log(time, day)
+
+    // Get student's email from body content by matching email regex
+    const content = message.getPlainBody()
+    const studentEmail = content.match(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)[0];
+
+    console.log(studentEmail)
+
+    // Find student in contacts by email, get name and custom fields
+    const contact = ContactsApp.getContact(studentEmail);
+    const name = contact.getGivenName()
+    const fields = contact.getCustomFields()
+    const zoomLink = fields[0].getValue();
+    const timeZone = fields[1].getValue();
+
+    // Function to change time
     const adjustEasternTime = (time, diff) => {
       // Split time into hour, minutes, and meridiem
       let timeArray = time.split(":");
@@ -71,14 +83,19 @@ function makeSessionReminderDrafts() {
         break;
     }
 
+    // Write message and create draft
     const htmlMessage = `<p>Hi ${name}!<br><br>Thank you for scheduling your session with me. I am looking forward to our session on ${day} at ${time} ${timeZone} Time.<br><br>If something comes up and the scheduled time will not work, <strong>let me know a minimum of 6 hours before the appointment time</strong> and we’ll figure something out.<br><br>This session will take place here: ${zoomLink}<br><br>(If you have not used zoom before please join the meeting at least 15 minutes early because it may have you download and install some software.)<br><br>Again, all I need from you:<ul><li>Be on Tutors & Students Slack 5 minutes before your time slot.</li><li>Make sure your computer/mic/internet connection are working.</li><li>Make sure your workspace is quiet and free from interruptions.</li><li>At the end of the session, I will provide you with a link to a 2 minute evaluation form that you are required to complete.</li></ul><br>Slack or email me with any questions.  I’m looking forward to our meeting!<br><br><strong>Please Reply All to this email so that I know you have seen it.</strong><br><br><strong>(CC Central Support on all tutor email by always using REPLY ALL).</strong><br><br>Sincerely,<br><br>Susan`
 
-    GmailApp.createDraft(email, `Coding Boot Camp - Tutorial Confirmation - ${day} at ${time} ${timeZone} Time`, htmlMessage, { cc: 'centraltutorsupport@bootcampspot.com ', htmlBody: htmlMessage })
+    GmailApp.createDraft(studentEmail, `Coding Boot Camp - Tutorial Confirmation - ${day} at ${time} ${timeZone} Time`, htmlMessage, { cc: 'centraltutorsupport@bootcampspot.com ', htmlBody: htmlMessage })
 
+    // Unstar message
+    message.unstar();
   }
-  sessions.forEach((newSession, index) => index !== 0 && makeDraft(newSession));
 
-  const startRow = 2;
-  const numOfRows = sheet.getLastRow() - startRow + 1;
-  sheet.deleteRows(startRow, numOfRows);
+  // Get emails from calendly about new sessions
+  const newSessions = GmailApp.search('is:starred AND label:ScheduledSessions');
+  console.log(newSessions)
+
+  // Run makeDraft for each
+  newSessions?.length > 0 ? newSessions.forEach(session => makeDraft(session)) : console.log("No New Sessions");
 }
