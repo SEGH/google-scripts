@@ -3,13 +3,35 @@ function myFunction() {
   console.log(students)
 
   for (let i = 0; i < students.length; i++) {
-    var email = students[i].getEmails()[0].getAddress();
-    var name = students[i].getGivenName()
-    var fields = students[i].getCustomFields()
-    var zoomLink = fields[0].getValue() || "";
-    var timeZone = fields[1].getValue() || "";
-    var day = fields[2].getValue() || "";
-    var time = fields[3].getValue() || "";
+    let email = students[i].getEmails()[0].getAddress();
+    let name = students[i].getGivenName()
+    let fields = students[i].getCustomFields()
+    let zoomLink = "";
+    let timeZone = "";
+    let day = "";
+    let time = "";
+
+    // Set values of custom fields based on label
+    for (let i = 0; i < fields.length; i++) {
+      let fieldValue = fields[i].getValue();
+      let fieldLabel = fields[i].getLabel();
+      switch (fieldLabel) {
+        case 'Zoom-link':
+          zoomLink = fieldValue;
+          break;
+        case 'Time-zone':
+          timeZone = fieldValue;
+          break;
+        case 'Time':
+          time = fieldValue;
+          break;
+        case 'Day':
+          day = fieldValue;
+          break;
+        default:
+          break;
+      }
+    }
 
     // Find date of next session
     const today = new Date();
