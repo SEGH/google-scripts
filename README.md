@@ -22,7 +22,7 @@ Set filter in Gmail to apply 'ScheduledSessions' label and star new messages fro
 
 Function searches for google contact by the student's email found in message and drafts an email for that contact.
 
-Contacts must have zoomLink and timeZone custom fields.
+Contacts must have 'Zoom-link' and 'Time-zone' custom fields.
 
 Add a time-based trigger to automatically run function every hour.
 
@@ -30,7 +30,7 @@ Add a time-based trigger to automatically run function every hour.
 
 Modify name in html message to be your name.
 
-Must have a groups of contacts that matches the getContactGroup argument. Add zoomLink, timeZone, day, and time custom fields to contacts. The function will draft an email for every contact in that group.
+Must have a groups of contacts that matches the getContactGroup argument. Add 'Zoom-link', 'Time-zone', 'Day', and 'Time' custom fields to contacts. The function will draft an email for every contact in that group.
 
 Add a time-based trigger to automatically run function at chosen time.
 
